@@ -1,4 +1,4 @@
-# Dicas CLI: Do Básico ao IDE com Vim
+# VIM ZERO: Do Básico ao IDE com Vim
 
 Bem-vindo a este repositório de conhecimento! O objetivo desta documentação é ser um guia completo e pedagógico para qualquer pessoa que queira não apenas aprender a usar o Vim, mas também a transformá-lo em um ambiente de desenvolvimento (IDE) moderno e produtivo, integrado com as melhores ferramentas de linha de comando.
 
