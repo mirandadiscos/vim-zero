@@ -154,3 +154,14 @@ Para aprofundar seus conhecimentos, aqui estão as documentações oficiais e ou
 *   **Documentação (Vimdoc):** [https://vimdoc.sourceforge.net/](https://vimdoc.sourceforge.net/)
 *   **Vim Awesome (Loja de Plugins):** [https://vimawesome.com/](https://vimawesome.com/)
 *   **Vim-Plug (Gerenciador de Plugins):** [https://github.com/junegunn/vim-plug](https://github.com/junegunn/vim-plug)
+
+## Seção 5: Ferramentas Avançadas de Busca (`fzf` e `ripgrep`)
+
+Para otimizar ainda mais sua produtividade na linha de comando, recomendamos o uso combinado de `fzf` e `ripgrep`. Essas ferramentas transformam a busca por arquivos e conteúdo em uma experiência rápida e interativa.
+
+*   **`ripgrep` (`rg`):** Um buscador de texto ultra-rápido, inteligente e focado em código, que respeita seu `.gitignore` por padrão.
+*   **`fzf`:** Um "fuzzy finder" interativo que permite filtrar e selecionar rapidamente qualquer tipo de lista (arquivos, histórico de comandos, processos, etc.).
+
+**Saiba mais:** Para um guia completo de instalação, configuração e uso avançado, incluindo como integrar `fzf` com `ripgrep` para buscas de conteúdo interativas, consulte:
+
+**[Guia de Ferramentas Avançadas de Busca: ripgrep e fzf](./09_ferramentas_avancadas_de_busca.md)**

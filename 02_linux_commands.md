@@ -49,19 +49,28 @@ sudo chown vito:vito /caminho/para/o/arquivo
 
 ## 2. Processamento de Texto
 
-### `grep` (e seu sucessor `rg`)
-**O que faz:** Busca por padrões em texto.
-**Quando usar:** Para encontrar rapidamente linhas que contêm uma string ou expressão regular em um ou mais arquivos.
-**Alternativa Moderna:** `rg` (Ripgrep) é muito mais rápido e respeita `.gitignore` por padrão.
+### `ripgrep` (`rg`): O sucessor do `grep`
+**O que faz:** Busca por padrões em texto, mas de forma extremamente rápida e inteligente.
+**Quando usar:** Sempre que você precisar encontrar uma string ou expressão regular dentro de arquivos. `rg` deve ser sua ferramenta padrão para busca de conteúdo.
+**Principais Vantagens:**
+*   **Velocidade:** É muito mais rápido que o `grep`.
+*   **Inteligência:** Respeita seu `.gitignore` e ignora arquivos binários por padrão.
+*   **Usabilidade:** A sintaxe é simples e a saída é mais legível.
 
 **Exemplos:**
 ```bash
-# Encontra todas as linhas contendo "error" no arquivo server.log
-grep "error" server.log
-
 # Busca recursivamente pela string "API_KEY" em todos os arquivos do diretório atual
 rg "API_KEY" .
+
+# Busca por "minhaFuncao" apenas em arquivos TypeScript
+rg "minhaFuncao" -g "*.ts"
+
+# Busca ignorando maiúsculas/minúsculas
+rg -i "erro"
 ```
+**Aprofundamento:** Para uma busca ainda mais poderosa e interativa, combine `ripgrep` com `fzf`. Preparamos um guia detalhado sobre isso.
+
+**Consulte:** [Guia de Ferramentas Avançadas de Busca: ripgrep e fzf](./09_ferramentas_avancadas_de_busca.md)
 
 ### `sed`
 **O que faz:** "Stream Editor". Edita texto de forma programática.

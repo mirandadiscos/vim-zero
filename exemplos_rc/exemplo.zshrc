@@ -45,6 +45,16 @@ if command -v direnv &> /dev/null; then
 fi
 # --- Fim da Configuração do Direnv ---
 
+# --- Configuração do fzf e ripgrep ---
+# FZF_DEFAULT_COMMAND: Faz com que fzf use ripgrep para listar arquivos (mais rápido e respeita .gitignore)
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+
+# Carrega os key-bindings e a autocompleção do fzf
+if [ -f "$HOME/.fzf.zsh" ]; then
+  . "$HOME/.fzf.zsh"
+fi
+# --- Fim da Configuração do fzf e ripgrep ---
+
 # --- Outras configurações ---
 # Habilitar plugins do Oh My Zsh (se estiver usando)
 # plugins=(git common-aliases)
