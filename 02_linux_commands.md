@@ -1,76 +1,165 @@
-# Guia de Comandos Linux para Desenvolvedores
+# 02. Comandos Essenciais do Linux para Desenvolvedores
 
-Dominar a linha de comando é um superpoder para qualquer desenvolvedor. Além do básico (`ls`, `cd`, `mv`), existe um vasto universo de ferramentas que podem otimizar seu fluxo de trabalho.
-
-Este guia é uma referência para alguns desses comandos, organizados por categoria.
+Dominar a linha de comando é um superpoder. Este guia é uma referência para comandos essenciais, com foco em cenários práticos para o dia a dia do desenvolvimento.
 
 ---
 
-## Manipulação de Arquivos e Diretórios
+## 1. Manipulação de Arquivos e Diretórios
 
-*   **`find`**: Encontra arquivos e diretórios com base em critérios.
-    *   `find . -name "*.py"`: Encontra todos os arquivos que terminam com `.py` no diretório atual e subdiretórios.
-    *   `find . -type d -name "node_modules"`: Encontra todos os diretórios chamados `node_modules`.
-    *   `find . -name "*.log" -delete`: Encontra e deleta todos os arquivos de log.
+### `find`
+**O que faz:** Encontra arquivos e diretórios com base em critérios como nome, tipo, tamanho, etc.
+**Quando usar:** Quando você precisa localizar arquivos específicos em uma árvore de diretórios complexa.
 
-*   **`xargs`**: Executa comandos a partir da entrada padrão. Usado frequentemente em conjunto com o `find`.
-    *   `find . -name "*.tmp" | xargs rm`: Encontra todos os arquivos `.tmp` e os passa para o comando `rm` para serem deletados. É mais seguro e eficiente que `-exec`.
+**Exemplos:**
+```bash
+# Encontra todos os arquivos que terminam com .py no diretório atual e subdiretórios
+find . -name "*.py"
 
-*   **`tree`**: Exibe a estrutura de diretórios em formato de árvore. (Pode precisar ser instalado: `sudo apt install tree`).
-    *   `tree -L 2`: Mostra a árvore com profundidade máxima de 2 níveis.
+# Encontra todos os diretórios chamados 'node_modules' para posterior remoção
+find . -type d -name "node_modules"
 
-*   **`stat`**: Mostra informações detalhadas (metadados) de um arquivo.
-    *   `stat arquivo.txt`: Exibe o tamanho, permissões, datas de acesso/modificação, etc.
+# Encontra e deleta todos os arquivos de log (.log)
+find . -name "*.log" -delete
+```
 
-## Processamento de Texto
+### `xargs`
+**O que faz:** Executa um comando a partir da entrada padrão (stdin).
+**Quando usar:** Em conjunto com outros comandos (como `find`) para aplicar uma ação a uma lista de itens.
 
-*   **`grep`**: Busca por padrões em texto. A "ferramenta de busca" padrão do Unix.
-    *   `grep "error" server.log`: Encontra todas as linhas contendo "error" no arquivo `server.log`.
-    *   `grep -r "API_KEY" .`: Busca recursivamente pela string "API_KEY" em todos os arquivos do diretório atual.
-    *   **Alternativa Moderna:** `rg` (Ripgrep) é uma ferramenta similar, mas muito mais rápida e que respeita `.gitignore` por padrão.
+**Exemplo:**
+```bash
+# Encontra todos os diretórios 'node_modules' e os remove interativamente
+find . -type d -name "node_modules" | xargs rm -r
+```
 
-*   **`sed`**: "Stream Editor". Edita texto de forma programática.
-    *   `sed 's/antigo/novo/g' arquivo.txt`: Substitui todas as ocorrências de "antigo" por "novo" no arquivo.
+### `chmod` e `chown`
+**O que faz:** Altera as permissões (`chmod`) e a propriedade (`chown`) de arquivos e diretórios.
+**Quando usar:** Quando você precisa corrigir problemas de permissão, como ao executar um script.
 
-*   **`awk`**: Uma linguagem de programação para processamento de texto. Extremamente poderosa para manipular dados em colunas.
-    *   `ls -l | awk '{print $1, $9}'`: Mostra apenas as permissões e os nomes dos arquivos da saída do `ls -l`.
+**Exemplos:**
+```bash
+# Torna um script executável
+chmod +x meu_script.sh
 
-*   **`jq`**: O "sed para JSON". Uma ferramenta para fatiar, filtrar, mapear e transformar dados JSON na linha de comando. (Precisa ser instalado: `sudo apt install jq`).
-    *   `cat package.json | jq '.scripts'`: Extrai a chave "scripts" do `package.json`.
-
-## Monitoramento de Sistema e Processos
-
-*   **`htop`**: Um visualizador de processos interativo. Uma versão muito melhorada do `top`. (Precisa ser instalado: `sudo apt install htop`).
-
-*   **`df`**: **d**isk **f**ree. Mostra o uso de espaço em disco do sistema de arquivos.
-    *   `df -h`: Exibe em formato "legível por humanos" (human-readable), com KB, MB, GB.
-
-*   **`du`**: **d**isk **u**sage. Estima o uso de espaço de arquivos e diretórios.
-    *   `du -sh *`: Mostra um resumo do tamanho de cada arquivo/diretório no local atual.
-
-*   **`ps`**: Mostra os processos atualmente em execução.
-    *   `ps aux`: Mostra todos os processos de todos os usuários.
-    *   `ps aux | grep "python"`: Encontra todos os processos de python em execução.
-
-*   **`kill`**: Envia um sinal para um processo (geralmente para terminá-lo).
-    *   `kill <PID>`: Envia o sinal de término (TERM), pedindo para o processo fechar educadamente.
-    *   `kill -9 <PID>`: Envia o sinal de "matar" (KILL), forçando o término imediato do processo. Use como último recurso.
-
-## Rede
-
-*   **`curl`**: Ferramenta para transferir dados de ou para um servidor. Usado para fazer requisições web.
-    *   `curl https://api.github.com/users/octocat`: Faz uma requisição GET para a API do GitHub.
-    *   `curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' http://localhost:3000/data`: Envia dados JSON via POST.
-
-*   **`wget`**: Ferramenta de linha de comando para baixar arquivos da internet.
-    *   `wget https://releases.ubuntu.com/22.04/ubuntu-22.04.3-desktop-amd64.iso`: Baixa a imagem do Ubuntu.
-
-*   **`ping`**: Verifica a conectividade de rede com um host.
-    *   `ping google.com`: Envia pacotes para o Google e mede o tempo de resposta.
-
-*   **`ss`**: "Socket Statistics". Uma ferramenta moderna para inspecionar sockets e conexões de rede (substitui o antigo `netstat`).
-    *   `ss -tuln`: Mostra todos os sockets TCP (`t`) e UDP (`u`) que estão "escutando" (`l`) sem resolver nomes (`n`). Útil para ver quais portas estão abertas.
+# Altera o proprietário de um arquivo para o usuário 'vito'
+sudo chown vito:vito /caminho/para/o/arquivo
+```
 
 ---
 
-**Anterior:** [Configuração do Terminal para Produtividade](./01_terminal_setup.md) | **Próximo:** [Introdução e Comandos Essenciais (Vim e Neovim)](./03_vim_neovim_intro_basics.md)
+## 2. Processamento de Texto
+
+### `grep` (e seu sucessor `rg`)
+**O que faz:** Busca por padrões em texto.
+**Quando usar:** Para encontrar rapidamente linhas que contêm uma string ou expressão regular em um ou mais arquivos.
+**Alternativa Moderna:** `rg` (Ripgrep) é muito mais rápido e respeita `.gitignore` por padrão.
+
+**Exemplos:**
+```bash
+# Encontra todas as linhas contendo "error" no arquivo server.log
+grep "error" server.log
+
+# Busca recursivamente pela string "API_KEY" em todos os arquivos do diretório atual
+rg "API_KEY" .
+```
+
+### `sed`
+**O que faz:** "Stream Editor". Edita texto de forma programática.
+**Quando usar:** Para fazer substituições de texto em arquivos diretamente da linha de comando.
+
+**Exemplo:**
+```bash
+# Substitui todas as ocorrências de "antigo" por "novo" em um arquivo
+sed -i 's/antigo/novo/g' arquivo.txt
+```
+
+### `jq`
+**O que faz:** O "sed para JSON". Permite fatiar, filtrar e transformar dados JSON.
+**Quando usar:** Quando você precisa extrair ou manipular dados de uma resposta de API ou de um arquivo de configuração JSON.
+
+**Exemplo:**
+```bash
+# Extrai o valor da chave "version" de um arquivo package.json
+cat package.json | jq -r '.version'
+```
+
+---
+
+## 3. Monitoramento de Sistema e Processos
+
+### `htop`
+**O que faz:** Um visualizador de processos interativo. Uma versão muito melhorada do `top`.
+**Quando usar:** Para entender quais processos estão consumindo mais CPU e memória de forma visual e interativa.
+
+### `df` e `du`
+**O que fazem:** `df` (disk free) mostra o uso de espaço em disco do sistema; `du` (disk usage) estima o uso de espaço de arquivos.
+**Quando usar:** `df` para ter uma visão geral do disco; `du` para encontrar quais pastas estão ocupando mais espaço.
+
+**Exemplos:**
+```bash
+# Mostra o uso de disco em formato legível (GB, MB, etc.)
+df -h
+
+# Mostra um resumo do tamanho de cada item no diretório atual
+du -sh *
+```
+
+### `ps` e `kill`
+**O que fazem:** `ps` lista os processos em execução; `kill` envia um sinal para um processo (geralmente para terminá-lo).
+**Quando usar:** Para encontrar o ID de um processo (`PID`) e finalizá-lo.
+
+**Exemplos:**
+```bash
+# Encontra todos os processos de python em execução
+ps aux | grep "python"
+
+# Envia o sinal de término (pede para o processo fechar)
+kill <PID>
+
+# Força o término imediato (use como último recurso)
+kill -9 <PID>
+```
+
+---
+
+## 4. Rede e Transferência de Arquivos
+
+### `curl`
+**O que faz:** Ferramenta para transferir dados de ou para um servidor.
+**Quando usar:** Para fazer requisições HTTP, testar APIs e baixar arquivos.
+
+**Exemplos:**
+```bash
+# Faz uma requisição GET para a API do GitHub
+curl https://api.github.com/users/octocat
+
+# Envia dados JSON via POST
+curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' http://localhost:3000/data
+```
+
+### `ssh`
+**O que faz:** "Secure Shell". Conecta-se a um servidor remoto de forma segura.
+**Quando usar:** Para administrar servidores ou máquinas remotas.
+
+**Exemplo:**
+```bash
+# Conecta-se ao servidor com o usuário 'admin'
+ssh admin@endereco_do_servidor
+```
+
+### `scp` e `rsync`
+**O que fazem:** Copiam arquivos entre máquinas. `scp` é simples; `rsync` é mais poderoso e eficiente, pois só transfere as diferenças.
+**Quando usar:** `scp` para cópias rápidas; `rsync` para transferências grandes ou recorrentes.
+
+**Exemplos:**
+```bash
+# Copia um arquivo local para um servidor remoto
+scp /caminho/local/arquivo.txt usuario@servidor:/caminho/remoto/
+
+# Sincroniza um diretório local com um remoto
+rsync -avz /caminho/local/ usuario@servidor:/caminho/remoto/
+```
+
+---
+
+**Anterior:** [Configuração do Terminal](./01_terminal_setup.md) | **Próximo:** [Introdução ao Vim e Neovim](./03_vim_neovim_intro_basics.md)

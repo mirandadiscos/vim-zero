@@ -1,245 +1,152 @@
-# 03. Introdução e Comandos Essenciais (Vim e Neovim)
+# 03. Introdução ao Neovim e à Edição Modal
 
-Este guia é o seu ponto de partida para o mundo da edição modal com Vim e Neovim. Ele explica a filosofia por trás desses poderosos editores de texto e serve como um guia rápido para os comandos mais comuns, permitindo que você comece a editar de forma eficiente.
-
-## 1. Por que Usar o Vim/Neovim?
-
-Em uma era dominada por IDEs visualmente ricos como VS Code, a ideia de usar um editor de texto baseado em terminal como o Vim ou o Neovim pode parecer um retrocesso. No entanto, esses editores modais não apenas sobrevivem, mas prosperam em nichos de desenvolvimento de alta performance por razões que vão muito além da nostalgia, oferecendo uma experiência de edição extremamente eficiente e personalizável.
-
-### a) A Filosofia Central: Edição Modal
-A característica mais distintiva do Vim é sua **edição modal**. Você escolhe a ferramenta certa (o modo) para o trabalho: Modo Normal para navegar e manipular, Modo de Inserção para escrever, e Modo Visual para selecionar. Essa abordagem otimiza as tarefas mais comuns (leitura e modificação), permitindo que você edite sem tirar as mãos da *home row*.
-
-### b) A "Linguagem" do Vim: Eficiência e Composabilidade
-O Vim transforma a edição de texto em uma linguagem com uma gramática simples: **`verbo + substantivo`**. Por exemplo, `diw` (delete inner word - deletar palavra interna) é uma "frase" que você fala para o editor. Essa gramática, combinada com o operador ponto (`.`) para repetir a última alteração, torna a edição incrivelmente eficiente.
-
-### c) Ubiquidade e Leveza
-O Vim (ou `vi`) está pré-instalado em praticamente todos os sistemas Unix. Ele inicia instantaneamente e consome uma fração mínima de recursos, tornando-o ideal para qualquer ambiente.
-
-### d) Customização Infinita
-Vim e Neovim são camaleões. Através de plugins e seus arquivos de configuração (`.vimrc` ou `init.lua`), você constrói o seu IDE perfeito, adaptado ao seu fluxo de trabalho.
-
-### e) O Custo do Aprendizado vs. O Retorno do Investimento
-A curva de aprendizado é íngreme, mas o potencial de crescimento em velocidade e eficiência é quase ilimitado. É um investimento em uma habilidade que se pagará ao longo de toda a sua carreira.
+Este guia é seu ponto de partida para o mundo da edição modal com Neovim. Ele explica a filosofia por trás deste poderoso editor de texto e serve como um guia de referência para os comandos essenciais.
 
 ---
 
-## 2. Os Conceitos Fundamentais
+## 1. A Filosofia: Por que Neovim?
 
-### a) A Origem: `vi` e Vim
+Neovim é um editor de texto **modal**. Em vez de usar o mouse e combinações complexas de teclas (como `Ctrl+Shift+S`), você usa "modos" para realizar diferentes tarefas. Isso mantém suas mãos no teclado e torna a edição de código incrivelmente eficiente.
 
-*   **`vi`:** Criado por Bill Joy em 1976, um dos primeiros editores de tela cheia.
-*   **Vim (Vi IMproved):** Criado por Bram Moolenaar em 1991, um clone vastamente melhorado do `vi` com desfazer, sintaxe colorida e sistema de plugins.
+- **Modo Normal:** O modo padrão. Usado para navegar pelo arquivo, deletar, copiar e colar texto.
+- **Modo de Inserção:** Usado para escrever código.
+- **Modo Visual:** Usado para selecionar texto.
+- **Modo de Comando:** Usado para executar comandos como salvar, sair ou buscar.
 
-### b) Os "Motores" do Vim/Neovim: Os Modos de Edição
+A "linguagem" do Neovim é composta por **verbos** (ações) e **substantivos** (movimentos ou objetos de texto).
 
-1.  **Modo Normal (Normal Mode):** O modo padrão. Use para navegar, deletar, copiar, colar e executar a maioria dos comandos. (Pressione `<Esc>` de qualquer outro modo).
-2.  **Modo de Inserção (Insert Mode):** O modo para digitar texto. (Entre com `i`, `a`, `o`, `O`).
-3.  **Modo Visual (Visual Mode):** O modo para selecionar texto antes de aplicar um comando. (Entre com `v`, `V`, `Ctrl+v`).
-4.  **Modo de Comando (Command-Line Mode):** O modo para executar comandos complexos que começam com `:`. (Pressione `:` no Modo Normal).
+- `d` é o verbo "delete".
+- `w` é o substantivo "word" (palavra).
 
-### c) A Linguagem do Vim: Verbo + Substantivo (Detalhado)
-*   **Operadores (Verbos):** `d` (delete), `c` (change), `y` (yank/copy), `v` (visual), `gU` (uppercase), `gu` (lowercase), `>` (indentar).
-*   **Movimentos (Substantivos):** `h,j,k,l`, `w` (word), `b` (back), `e` (end), `ge`, `$` (end of line), `0` (start of line), `^` (first non-blank), `gg`, `G` (last line), `f{char}`, `t{char}`.
-*   **Objetos de Texto (Substantivos):** O par `i` (inner) e `a` (around) é usado com delimitadores: `w` (word), `s` (sentence), `p` (paragraph), `(`, `)`, `{`, `}`, `[`, `]`, `<`, `>`, `'`, `"`, `` ` ``.
-
-### d) A Configuração: `.vimrc` e `init.lua`
-
-*   **Vim:** Usa `.vimrc` (Vimscript) em `~/.vimrc`.
-*   **Neovim:** Prefere `init.lua` (Lua) em `~/.config/nvim/init.lua`, mas pode usar `init.vim` (Vimscript) e ser compatível com `.vimrc`.
+Juntos, `dw` significa "delete word" (deletar palavra). Essa gramática é o que torna o Neovim tão poderoso.
 
 ---
 
-## 3. Guia Rápido de Comandos (Cheat Sheet)
+## 2. Comandos Essenciais para Sobrevivência
 
-Este guia é uma referência rápida para os comandos mais comuns, organizados por nível de proficiência.
+Use estes comandos para começar a usar o Neovim imediatamente.
 
-### a) Nível 1: Comandos de Sobrevivência
-*Estes são os comandos essenciais para abrir um arquivo, fazer uma pequena alteração e sair sem destruir nada.*
-
-*   **Salvar e Sair (Modo de Comando)**
-    *   `:w` - **w**rite. Salva as alterações.
-    *   `:q` - **q**uit. Fecha o editor. Falhará se houver alterações não salvas.
-    *   `:wq` - Salva e fecha.
-    *   `:q!` - Sai forçadamente, descartando alterações.
-    *   `ZZ` - (No Modo Normal) Atalho rápido para `:wq`.
-*   **Navegação e Edição Simples (Modo Normal)**
-    *   `h`, `j`, `k`, `l` - Movimentação básica: esquerda, baixo, cima, direita.
-    *   `x` - Deleta o caractere sob o cursor.
-    *   `i` - **i**nsert. Entra no Modo de Inserção antes do cursor.
-    *   `a` - **a**ppend. Entra no Modo de Inserção depois do cursor.
-    *   `u` - **u**ndo. Desfaz a última alteração.
-    *   `Ctrl+r` - **r**edo. Refaz uma alteração desfeita.
-    *   `<Esc>` - Volta para o Modo Normal. A tecla mais importante.
-
-### b) Nível 2: O Editor do Dia a Dia
-*Comandos que transformam o editor em uma ferramenta de edição eficiente.*
-
-*   **Navegação Rápida (Modo Normal)**
-    *   `w` - Pula para o início da próxima **p**alavra.
-    *   `b` - Volta para o início da palavra **a**nterior.
-    *   `e` - Pula para o **f**im da palavra atual.
-    *   `0` - Início absoluto da linha.
-    *   `^` - Primeiro caractere não-branco da linha.
-    *   `$` - Fim da linha.
-    *   `gg` - Salta para a primeira linha do arquivo.
-    *   `G` - Salta para a última linha do arquivo.
-    *   `Ctrl+d` / `Ctrl+u` - Rola meia página para **b**aixo ou para **c**ima.
-*   **Operadores (Verbos) Comuns (Modo Normal)**
-    *   `d` - **d**elete. Precisa de um movimento. Ex: `dd` (deleta linha), `dw` (deleta palavra), `d$` (deleta até fim da linha).
-    *   `c` - **c**hange. Similar ao `d`, mas entra no Modo de Inserção. Ex: `cc` (muda linha), `cw` (muda palavra).
-    *   `y` - **y**ank (copiar). Ex: `yy` (copia linha), `yw` (copia palavra).
-    *   `p` / `P` - **p**aste. Cola depois (`p`) ou antes (`P`).
-*   **Busca (Modo Normal)**
-    *   `/texto` - Busca por "texto" para frente.
-    *   `?texto` - Busca por "texto" para trás.
-    *   `n` / `N` - Pula para a **p**róxima ou anterior ocorrência.
-
-### c) Nível 3: A Gramática do Vim/Neovim
-*Aqui você deixa de pensar em atalhos e começa a falar a "linguagem" do editor, combinando verbos e substantivos.*
-
-*   **O Ponto Mágico (`.`)** - Repete a última **alteração**.
-*   **Objetos de Texto** (`i` - inner, `a` - around):
-    *   `ci"` - Muda o texto **d**entro das **a**spas.
-    *   `ci(` - Muda o texto **d**entro dos **p**arênteses.
-    *   `diw` - Deleta a **p**alavra **i**nterna.
-    *   `caw` - Muda **u**ma **p**alavra (incluindo espaço).
-    *   `dat` - Deleta o conteúdo **a**o redor de uma **t**ag HTML.
-*   **Janelas (Splits)**
-    *   `:sp <arquivo>` - Abre em nova janela horizontal.
-    *   `:vsp <arquivo>` - Abre em nova janela vertical.
-    *   `Ctrl+w` + `h,j,k,l` - Navega entre janelas.
-    *   `Ctrl+w` + `q` - Fecha a janela atual.
-
-### d) Nível 4: Magia Negra do Vim/Neovim
-*Comandos que fazem outros desenvolvedores perguntarem "como você fez isso?".*
-
-*   **Macros (Gravando suas Ações)**
-    *   `q<letra>` - Começa a gravar no registro `<letra>`.
-    *   `q` - Para a gravação.
-    *   `@<letra>` - Executa a macro.
-    *   `@@` - Repete a última macro.
-*   **Marcadores (Marks)**
-    *   `m<letra>` - Cria um marcador.
-    *   `` `<letra> `` - Salta para a posição exata.
-    *   `'<letra>` - Salta para o início da linha.
-*   **Registros (Áreas de Transferência Múltiplas)** - O editor tem múltiplos registros (a-z) para copiar e colar.
-    *   `"<letra>y` - Copia para o registro `<letra>`.
-    *   `"<letra>p` - Cola do registro `<letra>`.
-*   **Outros Comandos Poderosos**
-    *   `Ctrl+a` / `Ctrl+x` - Incrementa ou decrementa o primeiro número.
-    *   `gf` - **g**oto **f**ile. Abre o arquivo sob o cursor.
+| Comando | Ação | Modo |
+| :--- | :--- | :--- |
+| `h`, `j`, `k`, `l` | Move o cursor (esquerda, baixo, cima, direita) | Normal |
+| `i` | Entra no **Modo de Inserção** antes do cursor | Normal |
+| `a` | Entra no **Modo de Inserção** depois do cursor | Normal |
+| `<Esc>` | Retorna ao **Modo Normal** | Inserção/Visual |
+| `:w` | Salva (**w**rite) o arquivo | Normal |
+| `:q` | Sai (**q**uit) do editor | Normal |
+| `:wq` | Salva e sai | Normal |
+| `:q!` | Sai sem salvar (forçado) | Normal |
+| `u` | Desfaz (**u**ndo) a última ação | Normal |
+| `Ctrl+r` | Refaz (**r**edo) a ação desfeita | Normal |
 
 ---
 
-## 4. Dicas e Configurações Essenciais para o Editor
+## 3. Navegação e Edição no Dia a Dia
 
-O arquivo de configuração do seu editor (`.vimrc` para Vim ou `init.lua` para Neovim) é o coração da personalização.
+### Navegação Rápida
+| Comando | Ação |
+| :--- | :--- |
+| `w` | Pula para o início da próxima palavra |
+| `b` | Volta para o início da palavra anterior |
+| `e` | Pula para o fim da palavra atual |
+| `0` | Vai para o início absoluto da linha |
+| `$` | Vai para o fim da linha |
+| `gg` | Vai para a primeira linha do arquivo |
+| `G` | Vai para a última linha do arquivo |
 
-### a) Exemplo de um `.vimrc` (Vimscript)
+### Edição (Verbos)
+| Comando | Ação | Exemplo de Uso |
+| :--- | :--- | :--- |
+| `d` | **d**elete | `dd` (deleta a linha inteira), `dw` (deleta a palavra) |
+| `c` | **c**hange | `cw` (muda a palavra e entra no Modo de Inserção) |
+| `y` | **y**ank (copiar) | `yy` (copia a linha inteira) |
+| `p` | **p**aste (colar) | Cola o texto copiado depois do cursor |
 
-```vim
-" =============================================================================
-"  Configurações Gerais e de Comportamento
-" =============================================================================
+### Busca
+| Comando | Ação |
+| :--- | :--- |
+| `/texto` | Busca por "texto" para frente no arquivo |
+| `?texto` | Busca por "texto" para trás |
+| `n` | Pula para a próxima ocorrência da busca |
+| `N` | Pula para a ocorrência anterior da busca |
 
-" Ativa a sintaxe de cores. Essencial para programação.
-syntax on
+---
 
-" Habilita o suporte a plugins e detecção de tipo de arquivo.
-filetype plugin indent on
+## 4. A Gramática do Neovim: "Fale" com seu Editor
 
-" Define o encoding para UTF-8, o padrão moderno.
-set encoding=utf-8
+Combine verbos com objetos de texto para realizar edições complexas de forma simples.
 
-" Desativa a criação de arquivos de backup irritantes (.swp).
-set nobackup
-set nowritebackup
-set noswapfile
+- `i` significa "inner" (interno).
+- `a` significa "around" (ao redor).
 
-" =============================================================================
-"  Interface e Aparência (UI)
-" =============================================================================
+| Comando | Ação |
+| :--- | :--- |
+| `ci"` | **c**hange **i**nner **"** (muda o texto *dentro* das aspas) |
+| `di(` | **d**elete **i**nner **(** (deleta o texto *dentro* dos parênteses) |
+| `caw` | **c**hange **a**round **w**ord (muda a palavra e o espaço ao redor dela) |
+| `dat` | **d**elete **a**round **t**ag (deleta o conteúdo ao redor de uma tag HTML) |
 
-" Mostra o número das linhas na lateral.
-set number
+O comando `.` (ponto) é um dos mais poderosos: ele **repete a última alteração**. Se você usou `ci"` para mudar o texto em uma string, pode ir para outra e apenas pressionar `.` para fazer a mesma alteração.
 
-" Mostra o número relativo da linha a partir da posição do cursor.
-" Facilita muito a navegação vertical (ex: 10j para pular 10 linhas para baixo).
-set relativenumber
+---
 
-" Destaca a linha onde o cursor está.
-set cursorline
+## 5. Configuração Inicial: `init.lua`
 
-" Mostra informações de estado (modo, arquivo) na parte inferior.
-set showmode
-set showcmd
+Neovim é configurado usando a linguagem Lua no arquivo `init.lua`. Este arquivo deve estar em `~/.config/nvim/init.lua`.
 
-" Mantém 8 linhas de contexto acima/abaixo do cursor ao rolar a página.
-set scrolloff=8
+A seguir, um exemplo de `init.lua` com configurações essenciais e bem comentadas, explicando o "porquê" de cada uma.
 
-" =============================================================================
-"  Busca (Search)
-" =============================================================================
+```lua
+-- ~/.config/nvim/init.lua
 
-" Conforme você digita a busca, o Vim já vai pulando para os resultados.
-set incsearch
+-- Define o líder (leader), a tecla principal para seus atalhos personalizados.
+-- O padrão é a contrabarra, mas muitos usam a barra de espaço.
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
-" Destaca todos os resultados de uma busca.
-set hlsearch
+-- Configurações (Options)
+local opt = vim.opt
 
-" Ignora maiúsculas/minúsculas ao buscar...
-set ignorecase
-" ...a não ser que você digite alguma letra maiúscula na sua busca.
-set smartcase
+-- [[ Aparência ]]
+opt.number = true             -- Mostra o número das linhas
+opt.relativenumber = true     -- Mostra números de linha relativos para fácil navegação (ex: 10j)
+opt.cursorline = true         -- Destaca a linha onde o cursor está
+opt.scrolloff = 8             -- Mantém 8 linhas de contexto acima/abaixo do cursor ao rolar
 
-" =============================================================================
-"  Indentação e Formatação de Código
-" =============================================================================
+-- [[ Comportamento ]]
+opt.encoding = 'utf-8'        -- Define o encoding para UTF-8
+opt.filetype = 'on'           -- Detecta o tipo de arquivo para aplicar configurações específicas
+opt.hidden = true             -- Permite trocar de buffer sem salvar
+opt.backup = false            -- Desativa arquivos de backup
+opt.writebackup = false       -- Desativa arquivos de backup na escrita
+opt.swapfile = false          -- Desativa o irritante arquivo .swp
 
-" Converte 'tabs' em espaços. Essencial para consistência.
-set expandtab
+-- [[ Indentação ]]
+opt.expandtab = true          -- Converte 'tabs' em espaços
+opt.tabstop = 2               -- Um 'tab' equivale a 2 espaços
+opt.shiftwidth = 2            -- Nível de indentação com 2 espaços
+opt.softtabstop = 2           -- Número de espaços ao pressionar 'tab'
+opt.autoindent = true         -- Indentação inteligente
+opt.smartindent = true        -- Indentação ainda mais inteligente para algumas linguagens
 
-" Define que um 'tab' (e um nível de indentação) equivale a 2 espaços.
-" (Use 4 se for a convenção do seu projeto/linguagem)
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+-- [[ Busca ]]
+opt.incsearch = true          -- Mostra resultados da busca enquanto você digita
+opt.hlsearch = true           -- Destaca todos os resultados da busca
+opt.ignorecase = true         -- Ignora maiúsculas/minúsculas na busca...
+opt.smartcase = true          -- ...a não ser que você digite uma letra maiúscula
 
-" Indentação inteligente baseada na linguagem do arquivo.
-set autoindent
-set smartindent
+-- Pequeno truque para limpar o destaque da busca pressionando Enter
+vim.api.nvim_set_keymap('n', '<CR>', ':nohlsearch<CR>', { noremap = true, silent = true })
 
-" =============================================================================
-"  Dica Extra: Plugins
-" =============================================================================
-
-" O Vim moderno ganha superpoderes com plugins.
-" Considere pesquisar sobre um gerenciador de plugins como o 'vim-plug'.
-" Com ele, você pode instalar facilmente coisas como:
-"
-" - 'NERDTree': Uma árvore de arquivos lateral.
-" - 'vim-airline': Uma barra de status bonita e informativa.
-" - 'coc.nvim': Autocomplete inteligente (similar ao VS Code).
-"
-" A instalação de plugins geralmente envolve adicionar linhas como esta no .vimrc:
-"
-" call plug#begin()
-"   Plug 'preservim/nerdtree'
-"   Plug 'vim-airline/vim-airline'
-" call plug#end()
-"
-" (Isso requer que o vim-plug já esteja instalado)
-
+print('init.lua carregado com sucesso!')
 ```
 
-### b) Como usar?
-
-1.  Abra um terminal.
-2.  Crie ou edite o arquivo com o comando: `vim ~/.vimrc`
-3.  Copie o conteúdo acima, cole no Vim e salve (`:wq`).
-4.  Feche e abra o Vim novamente para ver as mudanças.
+### Como Usar?
+1.  Crie o diretório se ele não existir: `mkdir -p ~/.config/nvim`
+2.  Abra o arquivo: `nvim ~/.config/nvim/init.lua`
+3.  Copie o conteúdo acima, cole no Neovim e salve com `:wq`.
+4.  Feche e abra o Neovim novamente para que as mudanças tenham efeito.
 
 ---
 
-**Anterior:** [Guia de Comandos Linux para Desenvolvedores](./02_linux_commands.md) | **Próximo:** [Neovim: Instalação e Filosofia](./04_neovim_installation_philosophy.md)
-```
+**Anterior:** [Comandos Essenciais do Linux](./02_linux_commands.md) | **Próximo:** [Instalação e Filosofia do Neovim](./04_neovim_installation_philosophy.md)
