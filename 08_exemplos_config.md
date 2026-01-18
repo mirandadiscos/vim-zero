@@ -129,3 +129,28 @@ Para usar este arquivo:
     direnv allow
     ```
 A partir de agora, toda vez que você entrar nesse diretório, o `direnv` carregará automaticamente as configurações do `.envrc` (como as ferramentas do `asdf` via `use asdf` e variáveis de ambiente).
+
+## Seção 4: Links e Recursos de Referência
+
+Para aprofundar seus conhecimentos, aqui estão as documentações oficiais e outros recursos úteis para as ferramentas mencionadas neste guia.
+
+### Git
+
+*   **Documentação Oficial:** [https://git-scm.com/doc](https://git-scm.com/doc)
+*   **Livro Pro Git (gratuito):** [https://git-scm.com/book/pt-br/v2](https://git-scm.com/book/pt-br/v2)
+
+### ASDF
+
+*   **Documentação Oficial:** [https://asdf-vm.com/](https://asdf-vm.com/)
+*   **Repositório no GitHub:** [https://github.com/asdf-vm/asdf](https://github.com/asdf-vm/asdf)
+
+### Direnv
+
+*   **Documentação Oficial:** [https://direnv.net/](https://direnv.net/)
+*   **Repositório no GitHub:** [https://github.com/direnv/direnv](https://github.com/direnv/direnv)
+
+### Vim
+
+*   **Documentação (Vimdoc):** [https://vimdoc.sourceforge.net/](https://vimdoc.sourceforge.net/)
+*   **Vim Awesome (Loja de Plugins):** [https://vimawesome.com/](https://vimawesome.com/)
+*   **Vim-Plug (Gerenciador de Plugins):** [https://github.com/junegunn/vim-plug](https://github.com/junegunn/vim-plug)
